@@ -5,8 +5,8 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Testing
   - Load Testing
+  - Testing
 url: >-
   https://raw.githubusercontent.com/api-evangelist/vegeta/refs/heads/main/apis.yml
 created: '2026-03-25'
@@ -19,8 +19,8 @@ apis:
       Vegeta is an open source HTTP load testing tool and library written in Go for generating constant request rates to measure API performance.
     humanURL: https://github.com/tsenart/vegeta
     tags:
-      - Testing
       - Load Testing
+      - Testing
     properties:
       - type: Documentation
         url: https://github.com/tsenart/vegeta#readme
