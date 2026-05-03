@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vegeta/refs/heads/main/json-structure/vegeta-metrics-structure.json",
+  "name": "VegetaMetrics",
+  "description": "Aggregate metrics computed from a completed Vegeta attack, including latency statistics, throughput, error rates, and status code distributions",
+  "type": "object",
+  "properties": {
+    "latencies": {
+      "type": "object",
+      "description": "Latency statistics across all requests",
+      "properties": {
+        "total": {
+          "type": "int32",
+          "description": "Total cumulative latency in nanoseconds",
+          "example": 123456789
+        },
+        "mean": {
+          "type": "int32",
+          "description": "Mean latency in nanoseconds",
+          "example": 12345678
+        },
+        "50th": {
+          "type": "int32",
+          "description": "50th percentile (median) latency in nanoseconds",
+          "example": 10000000
+        },
+        "90th": {
+          "type": "int32",
+          "description": "90th percentile latency in nanoseconds",
+          "example": 20000000
+        },
+        "95th": {
+          "type": "int32",
+          "description": "95th percentile latency in nanoseconds",
+          "example": 25000000
+        },
+        "99th": {
+          "type": "int32",
+          "description": "99th percentile latency in nanoseconds",
+          "example": 40000000
+        },
+        "max": {
+          "type": "int32",
+          "description": "Maximum latency in nanoseconds",
+          "example": 100000000
+        },
+        "min": {
+          "type": "int32",
+          "description": "Minimum latency in nanoseconds",
+          "example": 500000
+        }
+      }
+    },
+    "bytes_in": {
+      "type": "object",
+      "description": "Bytes received statistics",
+      "properties": {
+        "total": {
+          "type": "int32",
+          "description": "Total bytes received",
+          "example": 1048576
+        },
+        "mean": {
+          "type": "double",
+          "description": "Mean bytes received per request",
+          "example": 1024.5
+        }
+      }
+    },
+    "bytes_out": {
+      "type": "object",
+      "description": "Bytes sent statistics",
+      "properties": {
+        "total": {
+          "type": "int32",
+          "description": "Total bytes sent",
+          "example": 51200
+        },
+        "mean": {
+          "type": "double",
+          "description": "Mean bytes sent per request",
+          "example": 50.0
+        }
+      }
+    },
+    "earliest": {
+      "type": "datetime",
+      "description": "Timestamp of the earliest request",
+      "example": "2025-03-15T14:30:00.000000000Z"
+    },
+    "latest": {
+      "type": "datetime",
+      "description": "Timestamp of the latest request",
+      "example": "2025-03-15T14:30:30.000000000Z"
+    },
+    "end": {
+      "type": "datetime",
+      "description": "Timestamp when the last request completed",
+      "example": "2025-03-15T14:30:30.123456789Z"
+    },
+    "duration": {
+      "type": "int32",
+      "description": "Total attack duration in nanoseconds",
+      "example": 30000000000
+    },
+    "wait": {
+      "type": "int32",
+      "description": "Extra wait time in nanoseconds after last request",
+      "example": 123456789
+    },
+    "requests": {
+      "type": "int32",
+      "description": "Total number of requests sent",
+      "example": 3000
+    },
+    "rate": {
+      "type": "double",
+      "description": "Actual request rate in requests per second",
+      "example": 100.0
+    },
+    "throughput": {
+      "type": "double",
+      "description": "Successful requests per second",
+      "example": 99.5
+    },
+    "success": {
+      "type": "double",
+      "description": "Ratio of successful (non-error) responses (0.0 to 1.0)",
+      "minimum": 0,
+      "maximum": 1,
+      "example": 0.9967
+    },
+    "status_codes": {
+      "type": "object",
+      "description": "Distribution of HTTP status codes",
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "example": {
+        "200": 2990,
+        "500": 10
+      }
+    },
+    "errors": {
+      "type": "array",
+      "description": "Unique error messages encountered during the attack",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "connection refused"
+      ]
+    }
+  },
+  "required": [
+    "latencies",
+    "requests",
+    "rate",
+    "throughput",
+    "success",
+    "status_codes"
+  ]
+}

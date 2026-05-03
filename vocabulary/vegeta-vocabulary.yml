@@ -1,0 +1,211 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Vegeta"
+  description: >-
+    Domain vocabulary for the Vegeta HTTP load testing tool, covering attack configuration,
+    result measurement, metrics aggregation, and performance analysis concepts.
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+operational:
+  apis:
+    - name: Vegeta CLI
+      namespace: vegeta-cli
+      version: "12.x"
+      baseUrl: "cli"
+      status: active
+    - name: Vegeta Go Library
+      namespace: vegeta-lib
+      version: "12.x"
+      baseUrl: "github.com/tsenart/vegeta/lib"
+      status: active
+
+  resources:
+    - name: attack
+      description: "Load test run configuration and execution — defines rate, duration, and targets"
+      actions:
+        - create
+        - run
+        - encode
+        - decode
+    - name: result
+      description: "Individual HTTP request result — status code, latency, bytes, error"
+      actions:
+        - capture
+        - decode
+        - encode
+    - name: metrics
+      description: "Aggregate statistics computed from a set of results — latencies, rates, success ratio"
+      actions:
+        - compute
+        - report
+        - plot
+    - name: target
+      description: "HTTP request specification — method, URL, headers, body"
+      actions:
+        - define
+        - read
+
+  actions:
+    - name: attack
+      pattern: write
+      description: "Execute an HTTP load attack at a specified rate for a duration"
+    - name: report
+      pattern: read
+      description: "Generate a metrics report from binary result data (text, JSON, histogram)"
+    - name: plot
+      pattern: read
+      description: "Generate an interactive HTML latency graph from binary result data"
+    - name: encode
+      pattern: write
+      description: "Convert results between binary, JSON, and CSV output formats"
+    - name: decode
+      pattern: read
+      description: "Read and decode binary result files for further processing"
+
+  schemas:
+    core:
+      - name: VegetaAttack
+        description: "Attack configuration with rate, duration, target, and HTTP options"
+        key_properties:
+          - rate
+          - duration
+          - target
+          - timeout
+          - workers
+          - connections
+      - name: VegetaResult
+        description: "Single request result with latency, status code, bytes, and error"
+        key_properties:
+          - seq
+          - code
+          - timestamp
+          - latency
+          - bytes_in
+          - bytes_out
+          - error
+      - name: VegetaMetrics
+        description: "Aggregate metrics: latency percentiles, throughput, success rate, status codes"
+        key_properties:
+          - latencies
+          - requests
+          - rate
+          - throughput
+          - success
+          - status_codes
+          - errors
+
+  parameters:
+    rate_control:
+      - name: rate
+        type: integer
+        description: "Request rate in requests per second (0 = maximum)"
+      - name: duration
+        type: string
+        description: "Attack duration as Go duration string (e.g. 30s, 5m)"
+      - name: workers
+        type: integer
+        description: "Number of initial goroutines sending requests"
+      - name: max-workers
+        type: integer
+        description: "Maximum number of goroutines"
+    http_config:
+      - name: timeout
+        type: string
+        description: "Per-request timeout as Go duration string"
+      - name: connections
+        type: integer
+        description: "Maximum idle connections per target host"
+      - name: redirects
+        type: integer
+        description: "Maximum redirect hops to follow (-1 to not follow)"
+      - name: http2
+        type: boolean
+        description: "Enable HTTP/2"
+      - name: keepalive
+        type: boolean
+        description: "Enable keep-alive persistent connections"
+    tls:
+      - name: insecure
+        type: boolean
+        description: "Skip TLS certificate verification"
+
+  enums:
+    http_methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+      - HEAD
+      - OPTIONS
+    output_formats:
+      - text
+      - json
+      - binary
+      - csv
+    report_types:
+      - text
+      - json
+      - hist
+      - hdrplot
+
+capability:
+  workflows: []
+  personas:
+    - id: api-engineer
+      name: API Engineer
+      description: >-
+        Benchmarks API endpoints to measure latency percentiles and throughput
+        under sustained load for performance optimization and SLA validation.
+      workflows: []
+    - id: sre
+      name: Site Reliability Engineer
+      description: >-
+        Runs load tests in CI/CD pipelines to detect performance regressions
+        before deployment and to establish error budgets and SLOs.
+      workflows: []
+    - id: qa-engineer
+      name: QA Engineer
+      description: >-
+        Validates API behavior under load, checking for increased error rates,
+        timeouts, and status code distributions at different request rates.
+      workflows: []
+
+  domains:
+    - name: Load Generation
+      description: "Creating and running HTTP load at controlled rates"
+      resources: [attack, target]
+    - name: Result Collection
+      description: "Capturing per-request metrics during a load run"
+      resources: [result]
+    - name: Metrics Analysis
+      description: "Computing and reporting aggregate statistics from results"
+      resources: [metrics]
+
+  namespaces:
+    consumed: []
+    rest_exposed: []
+    mcp_exposed: []
+
+  binds: []
+
+crossReference:
+  - resource: attack
+    operations:
+      - attack
+    workflows: []
+    personas:
+      - API Engineer
+      - Site Reliability Engineer
+      - QA Engineer
+  - resource: metrics
+    operations:
+      - report
+      - plot
+    workflows: []
+    personas:
+      - API Engineer
+      - Site Reliability Engineer
+      - QA Engineer

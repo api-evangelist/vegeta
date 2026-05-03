@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vegeta/refs/heads/main/json-structure/vegeta-attack-structure.json",
+  "name": "VegetaAttack",
+  "description": "Vegeta attack configuration defining rate, duration, target, and HTTP options for a load test run",
+  "type": "object",
+  "properties": {
+    "rate": {
+      "type": "int32",
+      "description": "Request rate in requests per second (0 for maximum rate)",
+      "minimum": 0,
+      "example": 100
+    },
+    "duration": {
+      "type": "string",
+      "description": "Attack duration as a Go duration string (e.g. 30s, 1m, 5m30s)",
+      "example": "30s"
+    },
+    "target": {
+      "type": "object",
+      "description": "HTTP target specification for the attack",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "HTTP method",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "HEAD",
+            "OPTIONS"
+          ],
+          "example": "GET"
+        },
+        "url": {
+          "type": "uri",
+          "description": "Target URL",
+          "example": "https://api.example.com/v1/users"
+        },
+        "header": {
+          "type": "object",
+          "description": "HTTP headers as key-value pairs",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "example": {
+            "Authorization": [
+              "Bearer token123"
+            ],
+            "Content-Type": [
+              "application/json"
+            ]
+          }
+        },
+        "body": {
+          "type": "string",
+          "description": "Base64-encoded request body",
+          "example": "eyJrZXkiOiAidmFsdWUifQ=="
+        }
+      },
+      "required": [
+        "method",
+        "url"
+      ]
+    },
+    "timeout": {
+      "type": "string",
+      "description": "Request timeout as a Go duration string",
+      "example": "30s"
+    },
+    "workers": {
+      "type": "int32",
+      "description": "Number of initial workers (goroutines) sending requests",
+      "minimum": 1,
+      "example": 10
+    },
+    "max-workers": {
+      "type": "int32",
+      "description": "Maximum number of workers (goroutines) sending requests",
+      "minimum": 1,
+      "example": 18446744073709551615
+    },
+    "connections": {
+      "type": "int32",
+      "description": "Maximum number of idle open connections per target host",
+      "minimum": 0,
+      "example": 10000
+    },
+    "redirects": {
+      "type": "int32",
+      "description": "Number of redirects to follow (-1 to not follow)",
+      "example": 10
+    },
+    "insecure": {
+      "type": "boolean",
+      "description": "Disable TLS certificate verification",
+      "example": false
+    },
+    "http2": {
+      "type": "boolean",
+      "description": "Enable HTTP/2 request sending",
+      "example": true
+    },
+    "keepalive": {
+      "type": "boolean",
+      "description": "Enable persistent connections (keep-alive)",
+      "example": true
+    },
+    "chunked": {
+      "type": "boolean",
+      "description": "Enable chunked transfer encoding for request bodies",
+      "example": false
+    }
+  },
+  "required": [
+    "rate",
+    "duration"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "rate": 100,
+  "duration": "30s",
+  "target": {
+    "method": "GET",
+    "url": "https://api.example.com/v1/users",
+    "header": {
+      "Authorization": ["Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"],
+      "Accept": ["application/json"]
+    }
+  },
+  "timeout": "30s",
+  "workers": 10,
+  "connections": 10000,
+  "redirects": 10,
+  "insecure": false,
+  "http2": true,
+  "keepalive": true,
+  "chunked": false
+}

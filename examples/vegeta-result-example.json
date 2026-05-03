@@ -1,0 +1,16 @@
+{
+  "attack": "api-load-test",
+  "seq": 42,
+  "code": 200,
+  "timestamp": "2025-03-15T14:30:01.234567890Z",
+  "latency": 12345678,
+  "bytes_out": 0,
+  "bytes_in": 1024,
+  "error": "",
+  "method": "GET",
+  "url": "https://api.example.com/v1/users",
+  "headers": {
+    "Content-Type": ["application/json"],
+    "X-Request-ID": ["req-abc123def456"]
+  }
+}

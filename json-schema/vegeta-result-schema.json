@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vegeta/refs/heads/main/json-schema/vegeta-result-schema.json",
+  "title": "VegetaResult",
+  "description": "Vegeta result for a single HTTP request, including timing, status code, and response metadata",
+  "type": "object",
+  "properties": {
+    "attack": {
+      "type": "string",
+      "description": "Attack name label",
+      "example": "load-test"
+    },
+    "seq": {
+      "type": "integer",
+      "description": "Sequence number of this result in the attack",
+      "minimum": 0,
+      "example": 42
+    },
+    "code": {
+      "type": "integer",
+      "description": "HTTP status code of the response",
+      "minimum": 100,
+      "maximum": 599,
+      "example": 200
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the request was sent (RFC3339)",
+      "example": "2025-03-15T14:30:00.123456789Z"
+    },
+    "latency": {
+      "type": "integer",
+      "description": "Request latency in nanoseconds",
+      "minimum": 0,
+      "example": 1234567
+    },
+    "bytes_out": {
+      "type": "integer",
+      "description": "Number of bytes sent in the request body",
+      "minimum": 0,
+      "example": 256
+    },
+    "bytes_in": {
+      "type": "integer",
+      "description": "Number of bytes received in the response body",
+      "minimum": 0,
+      "example": 1024
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message if the request failed (empty string on success)",
+      "example": ""
+    },
+    "body": {
+      "type": "string",
+      "description": "Response body (present only when body capture is enabled)",
+      "example": "{\"status\": \"ok\"}"
+    },
+    "method": {
+      "type": "string",
+      "description": "HTTP method used",
+      "example": "GET"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Target URL",
+      "example": "https://api.example.com/v1/users"
+    },
+    "headers": {
+      "type": "object",
+      "description": "Response headers",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    }
+  },
+  "required": ["seq", "code", "timestamp", "latency", "bytes_out", "bytes_in", "error"]
+}
