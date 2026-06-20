@@ -6,7 +6,7 @@ description: >-
   Supports CLI and library usage with attack plans, rate limiting, duration control,
   and detailed result metrics including latency histograms and success rates.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Go
   - HTTP
