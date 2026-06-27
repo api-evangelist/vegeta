@@ -58,13 +58,13 @@ apis:
       - type: JSONStructure
         url: json-structure/vegeta-metrics-structure.json
         title: Metrics Structure
-      - type: Example
+      - type: Examples
         url: examples/vegeta-attack-example.json
         title: Attack Configuration Example
-      - type: Example
+      - type: Examples
         url: examples/vegeta-result-example.json
         title: Result Example
-      - type: Example
+      - type: Examples
         url: examples/vegeta-metrics-example.json
         title: Metrics Example
 
