@@ -81,6 +81,9 @@ apis:
         title: Metrics Example
 
 common:
+  - type: License
+    name: MIT
+    url: https://github.com/tsenart/vegeta/blob/master/LICENSE
   - type: Website
     url: https://github.com/tsenart/vegeta
   - type: Documentation
